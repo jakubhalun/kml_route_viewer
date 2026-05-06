@@ -20,6 +20,7 @@ export class App {
   readonly points = signal<TrackPoint[]>([]);
   readonly errors = signal<string[]>([]);
   readonly summary = signal<TrackSummary | null>(null);
+  selectedFileName = '';
 
   constructor(private kmlParser: KmlParserService) {}
 
@@ -27,6 +28,8 @@ export class App {
     const input = event.target as HTMLInputElement;
     const file = input.files?.[0];
     if (!file) return;
+
+    this.selectedFileName = file.name;
 
     const reader = new FileReader();
     reader.onload = (e) => {
