@@ -1,0 +1,36 @@
+<div class="container">
+  <h1>KML Route Viewer</h1>
+
+  <div class="controls">
+    <label for="kml-file">Load KML file:</label>
+    <input id="kml-file" type="file" accept=".kml" (change)="onFileChange($event)" />
+  </div>
+
+  @if (errors().length > 0) {
+    <div class="error-box">
+      @for (err of errors(); track err) {
+        <p class="error-msg">&#9888; {{ err }}</p>
+      }
+    </div>
+  }
+
+  @if (summary()) {
+    <div class="summary">
+      <span><strong>File:</strong> {{ summary()!.fileName }}</span>
+      <span><strong>Points:</strong> {{ summary()!.pointCount }}</span>
+      @if (summary()!.startTime) {
+        <span><strong>Start:</strong> {{ summary()!.startTime }}</span>
+      }
+      @if (summary()!.endTime) {
+        <span><strong>End:</strong> {{ summary()!.endTime }}</span>
+      }
+      @if (summary()!.duration) {
+        <span><strong>Duration:</strong> {{ summary()!.duration }}</span>
+      }
+    </div>
+  }
+
+  <div class="map-wrapper">
+    <app-map [points]="points()"></app-map>
+  </div>
+</div>
