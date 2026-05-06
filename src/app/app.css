@@ -13,7 +13,34 @@ h1 {
 }
 
 .controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-bottom: 6px;
+}
+
+.file-input {
+  display: none;
+}
+
+.file-btn {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #e0e0e0;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.file-btn:hover {
+  background: #d0d0d0;
+}
+
+.file-name {
+  font-size: 0.9rem;
+  color: #444;
 }
 
 .controls label {

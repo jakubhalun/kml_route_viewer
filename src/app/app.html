@@ -2,8 +2,9 @@
   <h1>KML Route Viewer</h1>
 
   <div class="controls">
-    <label for="kml-file">Load KML file:</label>
-    <input id="kml-file" type="file" accept=".kml" (change)="onFileChange($event)" />
+    <label class="file-btn" for="kml-file">Choose file</label>
+    <input id="kml-file" class="file-input" type="file" accept=".kml" (change)="onFileChange($event)" />
+    <span class="file-name">{{ selectedFileName || 'No file chosen' }}</span>
   </div>
 
   @if (errors().length > 0) {
