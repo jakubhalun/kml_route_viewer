@@ -1,0 +1,22 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: system-ui, sans-serif;
+}
+
+/* Leaflet time labels */
+.time-label {
+  background: transparent;
+  border: none;
+  font-size: 0.68rem;
+  color: #222;
+  white-space: nowrap;
+  text-shadow:
+    0 0 3px #fff,
+    0 0 3px #fff,
+    0 0 3px #fff;
+  pointer-events: none;
+}
+

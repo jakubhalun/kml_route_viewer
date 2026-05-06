@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+  color: #1a1a2e;
+}
+
+.controls {
+  margin-bottom: 6px;
+}
+
+.controls label {
+  margin-right: 8px;
+  font-weight: 600;
+}
+
+.error-box {
+  margin-bottom: 6px;
+}
+
+.error-msg {
+  margin: 2px 0;
+  color: #b00020;
+  font-size: 0.88rem;
+}
+
+.summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  background: #eef3fb;
+  border: 1px solid #b8cce4;
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin-bottom: 6px;
+  font-size: 0.88rem;
+  color: #222;
+}
+
+.map-wrapper {
+  flex: 1;
+  min-height: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  overflow: hidden;
+}
