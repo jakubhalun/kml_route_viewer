@@ -2,6 +2,10 @@
 
 A local-only Angular application that displays GPS tracks from KML files on an OpenStreetMap-based map.
 
+## Screenshot
+
+![KML Route Viewer screenshot](kml_route_viewer.png)
+
 ## Features
 
 - Load a local `.kml` file using a file picker (no file is sent anywhere — all parsing happens in the browser)
