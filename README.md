@@ -9,7 +9,8 @@ A local-only Angular application that displays GPS tracks from KML files on an O
 ## Features
 
 - Load a local `.kml` file using a file picker (no file is sent anywhere — all parsing happens in the browser)
-- Parses `gx:MultiTrack` / `gx:Track` KML format (as exported by Geo Tracker and similar apps)
+- Parses `gx:MultiTrack` / `gx:Track` KML (Geo Tracker and similar apps) as well as placemark-based
+  KML (Flightradar24 flight exports, Google Earth paths) — see [KML Format Support](#kml-format-support)
 - Displays the track as a polyline on an interactive Leaflet + OpenStreetMap map
 - Auto-fits the map view to the loaded track
 - Shows point markers and time labels at high zoom levels (zoom >= 16)
@@ -58,6 +59,16 @@ Then open `http://localhost:4200/`.
 
 ## KML Format Support
 
+Exporters encode a track in different ways, so the parser tries four strategies in order and uses the
+first one that yields points:
+
+1. **`<gx:Track>`** — Geo Tracker and similar GPS loggers
+2. **Timestamped `<Point>` placemarks** — Flightradar24 flight exports
+3. **`<LineString>` / `<LinearRing>`** — plain Google Earth path exports
+4. **Untimed `<Point>` placemarks** — last resort
+
+### 1. `gx:Track`
+
 Primary target: `gx:Track` inside `gx:MultiTrack` (namespaces `http://www.opengis.net/kml/2.2` and `http://www.google.com/kml/ext/2.2`).
 
 Each `<gx:Track>` must contain paired `<when>` and `<gx:coord>` elements:
@@ -72,6 +83,24 @@ Each `<gx:Track>` must contain paired `<when>` and `<gx:coord>` elements:
 ```
 
 Elements may be grouped (all `<when>` then all `<gx:coord>`) or interleaved — both variants are handled.
+
+### 2. Timestamped `<Point>` placemarks
+
+Flightradar24 exports one placemark per position fix, inside a `Route` folder:
+
+```xml
+<Placemark>
+  <TimeStamp><when>2026-06-07T09:48:22+00:00</when></TimeStamp>
+  <Point><coordinates>24.451241,46.242386,11582.4</coordinates></Point>  <!-- lon,lat,alt -->
+</Placemark>
+```
+
+These files also contain a `Trail` folder that repeats the same geometry as untimed `<LineString>`
+segments; because `<gx:Track>` and timestamped points are tried first, the route is read once and
+keeps its timestamps. Altitude in `<coordinates>` is in metres, as required by the KML spec.
+
+Since `<gx:Track>` is always preferred, a Geo Tracker file that also carries start/finish `<Point>`
+waypoints is parsed from its track exactly as before.
 
 ## OpenStreetMap Tile Usage
 
