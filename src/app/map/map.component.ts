@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import * as L from 'leaflet';
 import { TrackPoint } from '../kml-parser.service';
+import { LocalFileTileLayer } from './local-file-tile-layer';
 
 /**
  * Tile provider note:
@@ -63,10 +64,15 @@ export class MapComponent implements AfterViewInit, OnDestroy, OnChanges {
   private initMap(): void {
     this.map = L.map(this.mapContainer.nativeElement, { preferCanvas: true }).setView([50, 20], 6);
 
-    L.tileLayer(TILE_URL, {
+    const tileOptions = {
       attribution: TILE_ATTRIBUTION,
       maxZoom: 19,
-    }).addTo(this.map);
+    };
+    const tileLayer =
+      window.location.protocol === 'file:'
+        ? new LocalFileTileLayer(TILE_URL, tileOptions)
+        : L.tileLayer(TILE_URL, tileOptions);
+    tileLayer.addTo(this.map);
 
     this.labelsLayer = L.layerGroup().addTo(this.map);
 

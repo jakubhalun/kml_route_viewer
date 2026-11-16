@@ -44,8 +44,9 @@ After building, simply open in your browser — no web server needed:
 dist/kml-route-viewer/browser/index.html
 ```
 
-Double-click the file or open it via a `file:///` URL in Chrome, Firefox, or Edge.  
-Everything is inlined into a single HTML file, so there are no cross-origin requests.
+Double-click the file or open it via a `file:///` URL in Chrome, Firefox, or Edge.
+The app code is inlined and KML files are read locally. The map background still needs an internet
+connection because the browser fetches its tiles from OpenStreetMap.
 
 ## Development Server
 
@@ -105,6 +106,10 @@ waypoints is parsed from its track exactly as before.
 ## OpenStreetMap Tile Usage
 
 This app uses the **public OpenStreetMap tile server** (`tile.openstreetmap.org`), which is suitable for **personal, low-traffic local use** only.
+
+When opened from `file:///`, the browser omits the HTTP `Referer` header. The viewer identifies its
+tile requests using `X-Requested-With: io.github.jakubhalun.kml_route_viewer`. When served over HTTP
+or HTTPS, Leaflet uses regular image requests with the browser's `Referer`.
 
 > **For any public-facing or higher-traffic deployment**, you must use a dedicated tile provider
 > (e.g. a self-hosted tile server, [MapTiler](https://www.maptiler.com/),
